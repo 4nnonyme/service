@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order My Services</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: #0e0e0e;
+      color: white;
+      line-height: 1.6;
+    }
+    header {
+      background: #1f1f1f;
+      padding: 1.5rem;
+      text-align: center;
+      border-bottom: 2px solid #444;
+    }
+    header h1 {
+      font-size: 2rem;
+      color: #00ffd0;
+    }
+    .section {
+      padding: 2rem;
+      max-width: 1000px;
+      margin: auto;
+    }
+    h2 {
+      color: #00ffd0;
+      margin-bottom: 1rem;
+    }
+    .card {
+      background: #1c1c1c;
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 0 10px rgba(0, 255, 208, 0.1);
+    }
+    form {
+      background: #1c1c1c;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 255, 208, 0.1);
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 0.8rem;
+      margin-bottom: 1rem;
+      border: none;
+      border-radius: 5px;
+      background-color: #2a2a2a;
+      color: white;
+    }
+    button {
+      padding: 0.8rem 1.5rem;
+      background-color: #00ffd0;
+      color: black;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .hidden { display: none; }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      border-top: 2px solid #444;
+      background: #1f1f1f;
+      color: #aaa;
+    }
+    .contact-info {
+      text-align: center;
+      margin-top: 2rem;
+    }
+  </style>
+  <script>
+    const verificationCode = "code2025";
+
+    function login(event) {
+      event.preventDefault();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const verify = document.getElementById('verification').value;
+
+      if (username === 'client' && password === '1234' && verify === verificationCode) {
+        document.getElementById('login-section').classList.add('hidden');
+        document.getElementById('main-content').classList.remove('hidden');
+      } else {
+        alert('Invalid login or verification. Try: client / 1234 / code2025');
+      }
+    }
+
+    function goToPayment(event) {
+      event.preventDefault();
+      const name = document.getElementById('name').value;
+      const service = document.getElementById('service').value;
+      const details = document.getElementById('details').value;
+
+      const prices = {
+        "Python Bot": 15,
+        "Mini Script": 10,
+        "Gaming Tool": 20,
+        "Video Editing": 12
+      };
+
+      const price = prices[service] || 0;
+
+      document.getElementById('order-section').classList.add('hidden');
+      document.getElementById('payment-section').classList.remove('hidden');
+      document.getElementById('payment-summary').innerHTML = `
+        <p><strong>Service:</strong> ${service}</p>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Details:</strong> ${details}</p>
+        <p><strong>Total Price:</strong> $${price}</p>
+        <a href='https://wa.me/21624131979?text=${encodeURIComponent("I want to pay for: " + service + "\nName: " + name + "\nDetails: " + details + "\nPrice: $" + price)}' target='_blank'>
+          <button>Pay via WhatsApp</button>
+        </a>
+      `;
+    }
+  </script>
+</head>
+<body>
+  <header>
+    <h1>Order My Services</h1>
+    <p>Login Required</p>
+  </header>
+
+  <section class="section" id="login-section">
+    <h2>🔐 Client Login</h2>
+    <form onsubmit="login(event)">
+      <input id="username" type="text" placeholder="Username" required />
+      <input id="password" type="password" placeholder="Password" required />
+      <input id="verification" type="text" placeholder="Verification Code" required />
+      <button type="submit">Login</button>
+    </form>
+  </section>
+
+  <section class="section hidden" id="main-content">
+    <h2>💻 My Services</h2>
+    <div class="card">
+      <ul>
+        <li>Python Bots - $15</li>
+        <li>Mini Scripts - $10</li>
+        <li>Gaming Tools - $20</li>
+        <li>Video Editing - $12</li>
+      </ul>
+    </div>
+
+    <div id="order-section">
+      <h2>📝 Place Your Order</h2>
+      <form onsubmit="goToPayment(event)">
+        <input id="name" type="text" placeholder="Your Name" required />
+        <select id="service" required>
+          <option value="">Select Service</option>
+          <option value="Python Bot">Python Bot</option>
+          <option value="Mini Script">Mini Script</option>
+          <option value="Gaming Tool">Gaming Tool</option>
+          <option value="Video Editing">Video Editing</option>
+        </select>
+        <textarea id="details" rows="5" placeholder="Describe your request..." required></textarea>
+        <button type="submit">Continue to Payment</button>
+      </form>
+    </div>
+
+    <div id="payment-section" class="hidden">
+      <h2>💳 Payment</h2>
+      <div id="payment-summary" class="card"></div>
+    </div>
+
+    <div class="contact-info">
+      <h2>📲 Contact Me</h2>
+      <p>Instagram: <a href="https://instagram.com/yessyn_selmy" style="color:#00ffd0">@yessyn_selmy</a></p>
+      <p>WhatsApp: <a href="https://wa.me/21624131979" style="color:#00ffd0">+216 24 131 979</a></p>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025  FRn13ds | All rights reserved</p>
+  </footer>
+</body>
+</html>
